@@ -1,0 +1,24 @@
+<div>
+<p>
+
+    <mat-form-field appearance="fill">
+        <mat-label>登录名</mat-label>
+        <input matInput  [(ngModel)]="user.username">
+    </mat-form-field>
+
+</p>
+
+<p>
+
+    <mat-form-field appearance="fill">
+        <mat-label>密码</mat-label>
+        <input matInput [(ngModel)]="user.password">
+    </mat-form-field>
+
+</p>
+<p>
+    
+    <button mat-button (click)="login();">登录</button>
+</p>
+
+</div>

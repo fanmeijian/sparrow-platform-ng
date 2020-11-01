@@ -1,0 +1,35 @@
+<h1>
+    字段权限设置：{{dialogData.modelName +'->'+dialogData.fieldName}}
+</h1>
+<mat-dialog-content style="height: 300px;">
+<p>
+    <mat-form-field>
+        <mat-label>请输入用户名</mat-label>
+        <input matInput [(ngModel)]="userFieldPermission.id.username"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>请选择权限</mat-label>
+        <mat-select [(value)]="userFieldPermission.id.permission"> 
+            <mat-option value="READ">读取</mat-option>
+            <mat-option value="EDIT">编辑</mat-option>
+        </mat-select>
+    </mat-form-field>
+</p>
+    <mat-form-field  style="width: 100%;">
+        <mat-label>表达式</mat-label>
+        <textarea matInput [(ngModel)]="userFieldPermission.permissionEl"></textarea>
+    </mat-form-field>
+
+<p>
+    <button mat-flat-button color="primary" (click)="saveFieldPermission();">保存</button>
+</p>
+
+<li *ngFor="let o of list">
+    <button mat-flat-button color="warn" (click)="removeUserPermission(o.id);">移除</button> {{o.id.username}} {{o.id.permission}}<br />{{o.permissionEl}}
+    
+</li>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-dialog-close cdkFocusInitial mat-flat-button color="primary">关闭</button>
+</mat-dialog-actions>

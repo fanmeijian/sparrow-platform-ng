@@ -1,0 +1,62 @@
+.example-container{
+    height: 100%;
+}
+.title{
+    width: 100%;
+}
+mat-drawer{
+    width: 200px;
+}
+
+.breadcrumb{
+    width: 100%;
+    margin: 5px;
+}
+
+.menutree{
+    list-style:none;
+    background-color: teal;
+    color: white;
+}
+
+.tree{
+    /* padding-left: 10px; */
+    margin-left: 10px;
+}
+
+.logo{
+    height: 64px;
+    background-color: black;
+    color:white;
+    text-align: left;
+    vertical-align: middle;
+    width: 200px;
+    list-style:none;
+}
+
+.treeicon{
+    align-self: right;
+}
+.example-container{
+    
+}
+
+.nodetext{
+    text-align: left;
+    width: 300px;
+}
+
+.parentmenu{
+    border-width: 0px;
+    width: 100%;
+    text-align: left;
+}
+
+.parent{
+    cursor: pointer;
+    width: 100%;
+}
+
+.rightcontent{
+    height: 100%;
+}

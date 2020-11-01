@@ -1,0 +1,71 @@
+<button mat-stroked-button (click)="open(null)">新增</button>
+
+<div class="table-responsive">
+
+    <table mat-table [dataSource]="dataSource">
+
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let o">
+
+
+                <span *ngIf="o._links">{{o._links.self.href.split('/').splice(-1)}} </span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> 名称 </th>
+            <td mat-cell *matCellDef="let o">
+
+                <mat-form-field *ngIf="o.edit||o.new">
+                    <mat-label>请输入</mat-label>
+                    <input matInput [(ngModel)]='o.authority'>
+                </mat-form-field>
+
+                <span *ngIf="!(o.edit||o.new)"> {{o.authority}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="url">
+            <th mat-header-cell *matHeaderCellDef> 地址 </th>
+            <td mat-cell *matCellDef="let o">
+                <mat-form-field *ngIf="o.edit||o.new">
+                    <mat-label>请输入</mat-label>
+                    <input matInput [(ngModel)]='o.uri'>
+                </mat-form-field>
+
+                <span *ngIf="!(o.edit||o.new)"> {{o.uri}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operation">
+            <th mat-header-cell *matHeaderCellDef> 操作 </th>
+            <td mat-cell *matCellDef="let o;let i=index">
+                <ng-container *ngIf="!(o.edit||o.new)">
+                <button mat-icon-button (click)="open(o);">
+                    <mat-icon>edit</mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="delete(o)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="o.edit||o.new">
+                <button mat-button color='primary' (click)="save(o,i)" >保存</button>
+                <button mat-button color='primary' (click)="cancel(o,i)" >取消</button>
+            </ng-container>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay;sticky:true"></tr>
+
+        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+
+    </table>
+</div>
+
+
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+    (page)="pageChange($event);">
+</mat-paginator>

@@ -1,0 +1,23 @@
+
+
+table td{
+    padding: 10px;
+}
+
+button{
+    margin: 10px;
+}
+
+div{
+    margin: 10px;
+    height: 80%;
+}
+
+.table-responsive {
+    display: block;
+    overflow-x: auto;
+    
+  }
+  table{
+      width: 100%;
+  }

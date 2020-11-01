@@ -1,0 +1,29 @@
+<h1>{{file.name}}</h1>
+
+<mat-dialog-content style="height: 300px;">
+
+    <mat-form-field>
+        <mat-label>请输入用户名</mat-label>
+        <input matInput [(ngModel)]="userFilePermission.id.username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>请选择权限</mat-label>
+        <mat-select [(value)]="userFilePermission.id.permission">
+            <mat-option value="READ">读取</mat-option>
+            <mat-option value="EDIT">编辑</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <p>
+        <button mat-flat-button color="primary" (click)="save();">保存</button>
+    </p>
+
+    <li *ngFor="let o of userFilePermissions">
+        <button mat-flat-button color="warn" (click)="remove(o.id);">移除</button> {{o.username}}
+        {{o.permission}}<br />
+    </li>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-dialog-close cdkFocusInitial mat-flat-button color="primary">关闭</button>
+</mat-dialog-actions>

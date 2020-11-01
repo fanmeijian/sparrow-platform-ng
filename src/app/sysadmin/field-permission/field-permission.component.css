@@ -1,0 +1,25 @@
+table tr td{
+    word-break: break-all;
+    padding:5px;
+}
+table tr th{
+    padding:5px;
+}
+
+div{
+    margin: 10px;
+    height: 80%;
+}
+
+.table-responsive {
+    display: block;
+    overflow-x: auto;
+    
+  }
+  table{
+      width: 100%;
+  }
+
+button{
+    margin:5px;
+}

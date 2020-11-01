@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>新增/编辑权限</h1>
+<div mat-dialog-content>
+    <p>
+        <mat-form-field>
+            <mat-label>名称</mat-label>
+            <input matInput [(ngModel)]="data.authority">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field>
+            <mat-label>地址</mat-label>
+            <input matInput [(ngModel)]="data.uri">
+        </mat-form-field>
+    </p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">取消</button>
+    <button mat-button (click)="onOkClick(data)" cdkFocusInitial>确定</button>
+    <!-- <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button> -->
+</div>

@@ -1,0 +1,12 @@
+li{
+    list-style: none;
+    background-color: teal;
+    color: white;
+    border-color: white;
+    border-style: solid 2px;
+    margin:5px;
+}
+
+.mat-form-field,button{
+    margin:10px;
+}
