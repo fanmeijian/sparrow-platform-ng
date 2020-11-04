@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { EmployeeService } from '../../service/employee.service'
 
 @Component({
   selector: 'app-employee',
@@ -16,10 +17,12 @@ export class EmployeeComponent implements OnInit {
   pageSize: number;//每页默认大小
 
 
-  constructor() { }
+  constructor(private service : EmployeeService) { }
 
   ngOnInit(): void {
-    this.dataSource.data=[];
+    this.service.list().subscribe(res=>{
+      this.dataSource.data = res._embedded.swdEmployees;
+    });
   }
 
   //创建或查看详情

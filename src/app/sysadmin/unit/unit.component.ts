@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { UnitService } from '../../service/unit.service'
 
 @Component({
   selector: 'app-unit',
@@ -16,10 +17,12 @@ export class UnitComponent implements OnInit {
   pageSize: number;//每页默认大小
 
 
-  constructor() { }
+  constructor(private service : UnitService) { }
 
   ngOnInit(): void {
-    this.dataSource.data=[];
+    this.service.list().subscribe(res=>{
+      this.dataSource.data = res._embedded.swdUnits;
+    });
   }
 
   //创建或查看详情

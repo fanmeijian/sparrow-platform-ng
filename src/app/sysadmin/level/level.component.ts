@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { LevelService } from '../../service/level.service'
 
 @Component({
   selector: 'app-level',
@@ -16,10 +17,12 @@ export class LevelComponent implements OnInit {
   pageSize: number;//每页默认大小
 
 
-  constructor() { }
+  constructor(private service : LevelService) { }
 
   ngOnInit(): void {
-    this.dataSource.data=[];
+    this.service.list().subscribe(res=>{
+      this.dataSource.data = res._embedded.swdLevels;
+    });
   }
 
   //创建或查看详情
