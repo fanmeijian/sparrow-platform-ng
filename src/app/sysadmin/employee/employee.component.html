@@ -8,8 +8,8 @@
             <span *ngIf="o._links">{{o._links.self.href.split('/').splice(-1)}}</span> </td>
     </ng-container>
 
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> 名称 </th>
+    <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> 登录名 </th>
         <td mat-cell *matCellDef="let o">
             <span *ngIf="!o.action">{{o.name}}</span>
             <mat-form-field *ngIf="o.action">
@@ -19,13 +19,69 @@
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef> 代码 </th>
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> 姓名 </th>
         <td mat-cell *matCellDef="let o">
-            <span *ngIf="!o.action">{{o.code}}</span>
+            <span *ngIf="!o.action">{{o.name}}</span>
             <mat-form-field *ngIf="o.action">
-                <!-- <mat-label>代码</mat-label> -->
-                <input matInput [(ngModel)]="o.code" />
+                <!-- <mat-label>名称</mat-label> -->
+                <input matInput [(ngModel)]="o.name" />
+            </mat-form-field>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unit">
+        <th mat-header-cell *matHeaderCellDef> 所属部门 </th>
+        <td mat-cell *matCellDef="let o">
+            <span *ngIf="!o.action">{{o.name}}</span>
+            <mat-form-field *ngIf="o.action">
+                <!-- <mat-label>名称</mat-label> -->
+                <input matInput [(ngModel)]="o.name" />
+            </mat-form-field>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="level">
+        <th mat-header-cell *matHeaderCellDef> 职级 </th>
+        <td mat-cell *matCellDef="let o">
+            <span *ngIf="!o.action">{{o.name}}</span>
+            <mat-form-field *ngIf="o.action">
+                <!-- <mat-label>名称</mat-label> -->
+                <input matInput [(ngModel)]="o.name" />
+            </mat-form-field>
+        </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> 担任岗位 </th>
+        <td mat-cell *matCellDef="let o">
+            <span *ngIf="!o.action">{{o.name}}</span>
+            <mat-form-field *ngIf="o.action">
+                <!-- <mat-label>名称</mat-label> -->
+                <input matInput [(ngModel)]="o.name" />
+            </mat-form-field>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sysrole">
+        <th mat-header-cell *matHeaderCellDef> 系统角色 </th>
+        <td mat-cell *matCellDef="let o">
+            <span *ngIf="!o.action">{{o.name}}</span>
+            <mat-form-field *ngIf="o.action">
+                <!-- <mat-label>名称</mat-label> -->
+                <input matInput [(ngModel)]="o.name" />
+            </mat-form-field>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="group">
+        <th mat-header-cell *matHeaderCellDef> 所在群组 </th>
+        <td mat-cell *matCellDef="let o">
+            <span *ngIf="!o.action">{{o.name}}</span>
+            <mat-form-field *ngIf="o.action">
+                <!-- <mat-label>名称</mat-label> -->
+                <input matInput [(ngModel)]="o.name" />
             </mat-form-field>
         </td>
     </ng-container>

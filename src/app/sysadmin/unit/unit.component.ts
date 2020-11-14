@@ -12,7 +12,7 @@ export class UnitComponent implements OnInit {
 
   items: any[];
   dataSource: MatTableDataSource<any>=new MatTableDataSource<any>();
-  columnsToDisplay=['id','name','code','stat','operation'];
+  columnsToDisplay=['id','name','code','stat','parent','organization','operation'];
   total: number;//总数量
   pageSize: number;//每页默认大小
 

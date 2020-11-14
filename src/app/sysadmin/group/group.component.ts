@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { GroupService } from '../../service/group.service';
 
 @Component({
   selector: 'app-group',
@@ -11,15 +12,17 @@ export class GroupComponent implements OnInit {
 
   items: any[];
   dataSource: MatTableDataSource<any>=new MatTableDataSource<any>();
-  columnsToDisplay=['id','name','code','stat','operation'];
+  columnsToDisplay=['id','name','code','member','stat','operation'];
   total: number;//总数量
   pageSize: number;//每页默认大小
 
 
-  constructor() { }
+  constructor(private service : GroupService) { }
 
   ngOnInit(): void {
-    this.dataSource.data=[];
+    this.service.list().subscribe(res=>{
+      this.dataSource.data = res._embedded.swdGroups;
+    });
   }
 
   //创建或查看详情
