@@ -22,9 +22,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.service.login(this.user).subscribe(res => {
-      
-      localStorage.setItem("idToken", res.token);
+    this.service.login(this.user).subscribe(res => {   
+      localStorage.setItem("idToken", res.data);
       localStorage.setItem("username", this.user.username);     
       this.router.navigateByUrl("/dashboard").then(()=>{window.location.reload()});
     });  

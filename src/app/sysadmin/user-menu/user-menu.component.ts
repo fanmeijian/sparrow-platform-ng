@@ -51,7 +51,7 @@ export class UserMenuComponent implements OnInit {
   ngOnInit(): void {
     //initial the selected user menus
     this.menuService.getMenuTree().subscribe(res => {
-      this.dataSource.data = res;
+      this.dataSource.data = res.data;
 
       this.userService.userMenus(this.dialogData).subscribe(res1 => {
         res1._embedded.swdMenus.forEach(element => {

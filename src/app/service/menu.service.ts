@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalVariable } from '../global';
 
 
 @Injectable({
@@ -20,21 +21,21 @@ export class MenuService {
     httpParams.append('size',size.toString());
     httpParams.append('page',page.toString());
     // console.log(httpParams);
-    return this.http.get("http://localhost:6060/swdMenus",{params:{'size':size.toString(),'page':page.toString()}});
+    return this.http.get(GlobalVariable.BASE_API_URL+"/swdMenus",{params:{'size':size.toString(),'page':page.toString()}});
   }
 
 
   post(menu:any){
     menu.sort=0;
     menu.parentId=menu.parentId[0];
-    return this.http.post("http://localhost:6060/swdMenus",menu);
+    return this.http.post(GlobalVariable.BASE_API_URL+"/swdMenus",menu);
   }
 
   getMenuTree():Observable<any>{
     // httpOptions = {
     //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     // };
-    return this.http.get("http://localhost:6060/menuTrees");
+    return this.http.get(GlobalVariable.BASE_API_URL+"/menuTrees");
   }
 
   delete(menu:any){

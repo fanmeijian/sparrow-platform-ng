@@ -72,7 +72,7 @@ url;
 
 
        // this.menuService.getMenuTree().subscribe(menuTree => this.dataSource.data = menuTree);
-    this.userService.userMenuTrees().subscribe(res => this.dataSource.data = res);
+    this.userService.userMenuTrees().subscribe(res => this.dataSource.data = res.data);
     // this.dataSource.data = this.menuTree;
     
     if(localStorage.getItem("idToken")){
