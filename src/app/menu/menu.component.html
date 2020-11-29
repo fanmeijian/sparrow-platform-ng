@@ -1,4 +1,7 @@
 <div style="margin: 10px;">
+  <button mat-icon-button (click)="addNewItem(null)">
+    <mat-icon>add</mat-icon>
+  </button>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent;" matTreeNodePadding>
       <button mat-icon-button disabled></button>
@@ -47,7 +50,7 @@
           <mat-label>URL</mat-label>
           <input matInput [(ngModel)]="flatNodeMap.get(node).url">
         </mat-form-field>
-        <button mat-button (click)="saveNode(node)">保存</button>
+        <button mat-button (click)="saveNode(node);node.action='';">保存</button>
         <button mat-button (click)="node.action='';">取消</button>
       </ng-template>
     </mat-tree-node>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GlobalVariable } from '../global';
+import { GlobalVariable, SwdMenu } from '../global';
 
 
 @Injectable({
@@ -10,40 +10,35 @@ import { GlobalVariable } from '../global';
 export class MenuService {
 
   constructor(private http: HttpClient) { }
-  getMenus(size:number,page:number):Observable<any>{
-    // httpOptions = {
-    //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    // };
-    if(size===0){
-      size=20;
+
+  apiUrl = GlobalVariable.BASE_API_URL + "/swdMenus";
+  getMenus(size: number, page: number): Observable<any> {
+    if (size === 0) {
+      size = 20;
     }
-    let httpParams:HttpParams=new HttpParams();
-    httpParams.append('size',size.toString());
-    httpParams.append('page',page.toString());
+    let httpParams: HttpParams = new HttpParams();
+    httpParams.append('size', size.toString());
+    httpParams.append('page', page.toString());
     // console.log(httpParams);
-    return this.http.get(GlobalVariable.BASE_API_URL+"/swdMenus",{params:{'size':size.toString(),'page':page.toString()}});
+    return this.http.get(this.apiUrl, { params: { 'size': size.toString(), 'page': page.toString() } });
   }
 
 
-  post(menu:any){
-    menu.sort=0;
-    menu.parentId=menu.parentId[0];
-    return this.http.post(GlobalVariable.BASE_API_URL+"/swdMenus",menu);
+  post(menu: SwdMenu) {
+    menu.sort = 0;
+    return this.http.post<any>(this.apiUrl, menu);
   }
 
-  getMenuTree():Observable<any>{
-    // httpOptions = {
-    //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    // };
-    return this.http.get(GlobalVariable.BASE_API_URL+"/menuTrees");
+  getMenuTree(): Observable<any> {
+    return this.http.get(GlobalVariable.BASE_API_URL + "/menuTrees");
   }
 
-  delete(menu:any){
-    return this.http.delete(menu._links.self.href);
+  delete(id: string) {
+    return this.http.delete(this.apiUrl + '/' + id);
   }
 
-  put(menu:any){
-    return this.http.put(menu._links.self.href,menu);
+  put(menu: any) {
+    return this.http.put(menu._links.self.href, menu);
   }
-  
+
 }

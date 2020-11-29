@@ -12,6 +12,8 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { Directive } from '@angular/core';
+import { SwdMenu } from '../global';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 
@@ -20,16 +22,10 @@ import { Directive } from '@angular/core';
  * 菜单树的菜单节点类
  */
 
-export class MenuNode{
-  id: string;
-  name: string;
-  parentId: string;
-  sort: BigInteger;
-  url: string;
+export class MenuNode extends SwdMenu{
   parentString: string;
   parentIdString: string;
   children: MenuNode[];
-  
 }
 
 /** 展开菜单节点 含可展开及层级信息 */
@@ -48,15 +44,12 @@ export class MenuFlatNode {
  * If a node is a category, it has children items and new items can be added under the category.
  */
 @Injectable()
-@Directive({
-  selector: '[ngVar]',
-})
 export class ChecklistDatabase {
   dataChange = new BehaviorSubject<MenuNode[]>([]);
 
   get data(): MenuNode[] { return this.dataChange.value; }
 
-  constructor(private menuService: MenuService) {
+  constructor(private menuService: MenuService,private _snackBar: MatSnackBar) {
     this.initialize();
   }
 
@@ -68,49 +61,51 @@ export class ChecklistDatabase {
     })
   }
 
-  /**
-   * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
-   * The return value is the list of `TodoItemNode`.
-   */
-  buildFileTree(obj: { [key: string]: any }, level: number): MenuNode[] {
-    return Object.keys(obj).reduce<MenuNode[]>((accumulator, key) => {
-      const value = obj[key];
-      const node = new MenuNode();
-      node.id = key;
-
-      if (value != null) {
-        if (typeof value === 'object') {
-          node.children = this.buildFileTree(value, level + 1);
-        } else {
-          node.id = value;
-        }
-      }
-
-      return accumulator.concat(node);
-    }, []);
-  }
-
   /** 在数据库里面插入菜单 */
   insertItem(parentNode: MenuNode,item: string) {
     let newNode = new MenuNode();
-    newNode.parentId = parentNode.id;
     newNode.name = '';
     newNode.url = '';
     newNode.id = '';
-    if(!parentNode.children) parentNode.children = [];
-    parentNode.children.push(newNode as MenuNode);
+    newNode.children = [];
+    if(!parentNode){
+      newNode.parentId = '0';
+      this.data.push(newNode);
+    }else{
+      newNode.parentId = parentNode.id;
+      if(!parentNode.children) parentNode.children = [];
+      parentNode.children.push(newNode as MenuNode);
+    }
     this.dataChange.next(this.data);
   }
 
   cancelItem(parent: MenuNode, node:MenuNode){
-    // console.log(parent.children.findIndex(o=>o === node));
-    parent.children = parent.children.filter(o=>o!=node);
-    this.dataChange.next(this.data);
+    
+    if(Number.parseInt(node.id)>0){
+      //从数据库删除
+      this.menuService.delete(node.id).subscribe(res=>{
+        this._snackBar.open('成功！','关闭',{duration: 2000});
+        if(!parent)
+          this.dataChange.next(this.data.filter(o=>o!=node));
+          // this.data.splice(this.data.findIndex(o=>o=node),1);
+        else
+          parent.children = parent.children.filter(o=>o!=node);
+        this.dataChange.next(this.data);
+      })
+    }else{
+      parent.children = parent.children.filter(o=>o!=node);
+      this.dataChange.next(this.data);
+    }
+    
   }
 
-  updateItem(node: MenuNode) {
-    // node.name = name;
-    this.dataChange.next(this.data);
+  updateItem(node: MenuNode) {  
+    this.menuService.post(node).subscribe(res=>{     
+      this._snackBar.open('成功！','关闭',{duration: 2000});
+      node.id = res._links.self.href;
+      node.id = node.id.substring(node.id.lastIndexOf('/')+1);
+      this.dataChange.next(this.data);
+    });
   }
 }
 
@@ -119,7 +114,7 @@ export class ChecklistDatabase {
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
-  providers: [ChecklistDatabase]
+  providers: [ChecklistDatabase,MatSnackBar]
 })
 export class MenuComponent implements OnInit {
 
@@ -268,21 +263,19 @@ export class MenuComponent implements OnInit {
 
   /** Select the category so we can insert the new item. */
   addNewItem(node: MenuFlatNode) {
-    const parentNode = this.flatNodeMap.get(node);
-    node.expandable = true;
-    this._database.insertItem(parentNode!, '');
-    let menu = new MenuNode();
-    menu.name = 'aaaaa';
-    this.newMenuNodeMap.set(node,menu);
-    this.treeControl.expand(node);
-  }
-
-  editItem(node: MenuFlatNode){
-
+    if(!node){
+      //根菜单
+      this._database.insertItem(null, '');
+    }else{
+      const parentNode = this.flatNodeMap.get(node);
+      node.expandable = true;
+      this._database.insertItem(parentNode!, '');
+      this.treeControl.expand(node);
+    }
   }
 
   deleteItem(node: MenuFlatNode){
-
+    this.cancelNode(node);
   }
 
   /** Save the node to database */
@@ -293,9 +286,8 @@ export class MenuComponent implements OnInit {
   }
 
   cancelNode(node: MenuFlatNode) {
-    const parentNode = this.nodeMap.get(this.flatNodeMap.get(node).parentId);
-    // this.flatNodeMap.delete(node);
-    this._database.cancelItem(parentNode,this.flatNodeMap.get(node));
+    const parentNode = this.flatNodeMap.get(this.getParentNode(node));//this.nodeMap.get(this.flatNodeMap.get(node).parentId);
+    this._database.cancelItem(parentNode!,this.flatNodeMap.get(node));
   }
 
   ngOnInit(): void {
