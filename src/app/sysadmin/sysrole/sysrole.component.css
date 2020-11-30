@@ -12,8 +12,8 @@ div{
       width: 100%;
   }
 table td,table th{
-    padding:10px;
-    text-align: center;
+    padding:1px;
+    text-align: left;
 }
 
 button{

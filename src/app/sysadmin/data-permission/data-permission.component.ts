@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {DataPermissionService} from '../../service/data-permission.service'
 import { UserFieldPermissionComponent } from '../user-field-permission/user-field-permission.component';
@@ -13,13 +14,20 @@ export class DataPermissionComponent implements OnInit {
   columnsToDisplay = ['id', 'modelName', 'fieldName', 'model', 'field', 'operation'];
   list:any[];
 
+  totalElements: number;
+  pageSize = 10;
+
   constructor(private service:DataPermissionService,public dialog: MatDialog) { 
 
     this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit(): void {
-    this.service.list().subscribe(res=>this.dataSource.data=res);
+    this.service.list(0,10).subscribe(res=>{
+      this.dataSource.data=res._embedded.swdDataPermissions;
+      this.totalElements = res.page.totalElements;
+    });
+    
   }
   dataSource: MatTableDataSource<any>;
 
@@ -47,7 +55,7 @@ export class DataPermissionComponent implements OnInit {
   delete(o: any) {
     this.dataSource.data=this.dataSource.data.filter(f=>f!=o);
     this.dataSource.filter='';
-    this.service.delete(o.id).subscribe();
+    this.service.delete(o).subscribe();
   }
 
   save(o: any, i: number) {
@@ -68,6 +76,15 @@ export class DataPermissionComponent implements OnInit {
       delete o.action;
     }
 
+  }
+  pageChange(pageEvent: PageEvent) {
+    if (pageEvent) {
+      this.service.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe(res => { 
+        this.dataSource.data = res._embedded[Object.keys(res._embedded)[0]]; 
+      });
+
+    }
+    return this.dataSource;
   }
 
 }

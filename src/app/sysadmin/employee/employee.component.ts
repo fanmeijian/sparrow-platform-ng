@@ -14,14 +14,15 @@ export class EmployeeComponent implements OnInit {
   dataSource: MatTableDataSource<any>=new MatTableDataSource<any>();
   columnsToDisplay=['id','name','unit','role','level','sysrole','group','stat','operation'];
   total: number;//总数量
-  pageSize: number;//每页默认大小
+  pageSize: number = 10;//每页默认大小
 
 
   constructor(private service : EmployeeService) { }
 
   ngOnInit(): void {
-    this.service.list().subscribe(res=>{
+    this.service.list(0, this.pageSize).subscribe(res=>{
       this.dataSource.data = res._embedded.swdEmployees;
+      this.total = res.page.totalElements;
     });
   }
 
@@ -41,7 +42,7 @@ export class EmployeeComponent implements OnInit {
   //翻页事件
   pageChange(pageEvent: PageEvent) {
     if (pageEvent) {
-      // this.service.getMenus(pageEvent.pageSize, pageEvent.pageIndex).subscribe(res => { this.dataSource.data = res._embedded.swdMenus; this.dataSourceLength = this.dataSource.data.length;this.length=res.page.totalElements });
+      this.service.list( pageEvent.pageIndex,pageEvent.pageSize).subscribe(res => { this.dataSource.data = res._embedded.swdEmployees; this.total=res.page.totalElements });
 
     }
     return this.dataSource;

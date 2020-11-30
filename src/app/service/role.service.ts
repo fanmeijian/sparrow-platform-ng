@@ -10,8 +10,8 @@ export class RoleService {
   constructor(private http:HttpClient) { }
 
 
-  list(){
-    return this.http.get<any>(GlobalVariable.BASE_API_URL + '/swdRoles');
+  list(page: number,size: number){
+    return this.http.get<any>(GlobalVariable.BASE_API_URL + '/swdRoles',{ params: {size: size.toString(), page: page.toString()}});
   }
 
   get(){

@@ -10,7 +10,7 @@ export class GroupService {
   constructor(private http:HttpClient) { }
 
 
-  list(){
-    return this.http.get<any>(GlobalVariable.BASE_API_URL + '/swdGroups');
+  list(page: number, size: number){
+    return this.http.get<any>(GlobalVariable.BASE_API_URL + '/swdGroups',{ params: {size: size.toString(), page: page.toString()}});
   }
 }

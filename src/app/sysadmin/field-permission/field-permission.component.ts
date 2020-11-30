@@ -19,7 +19,7 @@ export class FieldPermissionComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   ngOnInit(): void {
-    this.service.list().subscribe(res => {  this.dataSource.data = res });
+    this.service.list(0,10).subscribe(res => {  this.dataSource.data = res._embedded.swdFieldPermissions });
   }
 
   showUsers(o: any) {

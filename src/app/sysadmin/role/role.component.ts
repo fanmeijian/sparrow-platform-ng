@@ -11,17 +11,18 @@ import { RoleService } from '../../service/role.service'
 export class RoleComponent implements OnInit {
 
   items: any[];
-  dataSource: MatTableDataSource<any>=new MatTableDataSource<any>();
-  columnsToDisplay=['id','name','code','stat','operation'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  columnsToDisplay = ['id', 'name', 'code', 'stat', 'operation'];
   total: number;//总数量
-  pageSize: number;//每页默认大小
+  pageSize: number = 10;//每页默认大小
 
 
-  constructor(private service : RoleService) { }
+  constructor(private service: RoleService) { }
 
   ngOnInit(): void {
-    this.service.list().subscribe(res=>{
+    this.service.list(0, this.pageSize).subscribe(res => {
       this.dataSource.data = res._embedded.swdRoles;
+      this.total = res.page.totalElements;
     });
   }
 
@@ -41,7 +42,9 @@ export class RoleComponent implements OnInit {
   //翻页事件
   pageChange(pageEvent: PageEvent) {
     if (pageEvent) {
-      // this.service.getMenus(pageEvent.pageSize, pageEvent.pageIndex).subscribe(res => { this.dataSource.data = res._embedded.swdMenus; this.dataSourceLength = this.dataSource.data.length;this.length=res.page.totalElements });
+      this.service.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe(res => {
+        this.dataSource.data = res._embedded.swdRoles; this.total = res.page.totalElements
+      });
 
     }
     return this.dataSource;

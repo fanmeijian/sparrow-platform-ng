@@ -7,6 +7,8 @@ import { UserMenuComponent } from '../user-menu/user-menu.component';
 import { UserAuthorityComponent } from '../user-authority/user-authority.component';
 import { SysroleComponent } from '../sysrole/sysrole.component';
 import { UserSysroleComponent } from '../user-sysrole/user-sysrole.component';
+import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 
@@ -18,12 +20,14 @@ import { UserSysroleComponent } from '../user-sysrole/user-sysrole.component';
 })
 export class UserComponent implements OnInit {
 
-
+  totalElements: number;
+  pageSize = 10;
+  pageEvent: PageEvent;
 
 
 
   menus: any[];
-  list: any[];
+  dataSource: MatTableDataSource<any>;
   columnsToDisplay = ["id", "name", "password", "operation"];
 
 
@@ -32,7 +36,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.list().subscribe(res => { this.list = res._embedded.swdUsers;; });
+    this.service.list(0,10).subscribe(res => { this.dataSource = res._embedded.swdUsers;; });
 
   }
 
@@ -58,6 +62,14 @@ export class UserComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  pageChange(pageEvent: PageEvent) {
+    if (pageEvent) {
+      this.service.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe(res => { 
+        this.dataSource.data = res._embedded[Object.keys(res._embedded)[0]]; 
+      });
 
+    }
+    return this.dataSource;
+  }
 
 }

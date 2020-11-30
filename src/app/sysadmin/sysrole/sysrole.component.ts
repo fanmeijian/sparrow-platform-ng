@@ -4,6 +4,12 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { SysroleMenuComponent } from '../sysrole-menu/sysrole-menu.component';
 import { SysroleAuthorityComponent } from '../sysrole-authority/sysrole-authority.component';
+import { PageEvent } from '@angular/material/paginator';
+import { SpringEmbeddedList, SwdSysrolesRep } from '../../global';
+
+export class SwdSysroleList extends SpringEmbeddedList{
+  swdSysroles: SwdSysrolesRep[];
+}
 
 @Component({
   selector: 'app-sysrole',
@@ -12,20 +18,32 @@ import { SysroleAuthorityComponent } from '../sysrole-authority/sysrole-authorit
 })
 export class SysroleComponent implements OnInit {
 
-  @ViewChild('newDialog', { static: true }) newDialog: TemplateRef<any>;
+  swdSysroleList: SwdSysroleList;
+  totalElements: number;
+  pageSize = 10;
+  pageEvent: PageEvent;
+  dataSource: MatTableDataSource<SwdSysrolesRep>;
+  length: any;
 
-  constructor(private service: SysroleService, public dialog: MatDialog) { }
+  // @ViewChild('newDialog', { static: true }) newDialog: TemplateRef<any>;
+
+  constructor(private service: SysroleService, public dialog: MatDialog) {
+    this.dataSource = new MatTableDataSource();
+   }
 
   ngOnInit(): void {
-    this.service.list().subscribe(res => { this.list.data = res._embedded.swdSysroles});
-    this.list = new MatTableDataSource();
+    this.service.list(0,10).subscribe(res => { 
+      this.swdSysroleList = res._embedded;
+      this.dataSource.data = this.swdSysroleList.swdSysroles;
+      this.totalElements = res.page.totalElements;
+    });
+    
   }
 
   delete(o: any) {
-    this.service.delete(o).subscribe(res => this.list.data = this.list.data.filter(h => h != o));
+    this.service.delete(o).subscribe(res => this.dataSource.data = this.dataSource.data.filter(h => h != o));
   }
 
-  list: MatTableDataSource<any>;
   columnsToDisplay = ["id", "name", "operation"];
 
   dialogData: any;
@@ -38,8 +56,8 @@ export class SysroleComponent implements OnInit {
     }else{
       o=new Object();
       o.action="new";
-      this.list.data.unshift(o);
-      this.list.filter = "";
+      this.dataSource.data.unshift(o);
+      this.dataSource.filter = "";
     }  
     
     
@@ -74,19 +92,29 @@ export class SysroleComponent implements OnInit {
     if (o.action=="edit") {
       this.service.put(o).subscribe(res => { o = res });
     } else {
-      this.service.post(o).subscribe(res => { this.list.data.splice(i, 1); this.list.data.splice(i, 0, res); this.list.filter = "" });
+      this.service.post(o).subscribe(res => { this.dataSource.data.splice(i, 1); this.dataSource.data.splice(i, 0, res); this.list.filter = "" });
     }
     delete o.action;
   }
 
   cancel(o:any,i: number) {
     if(o.action=="new"){
-      this.list.data.splice(i, 1);
-      this.list.filter = "";
+      this.dataSource.data.splice(i, 1);
+      this.dataSource.filter = "";
     }
 
     delete o.action;
     
+  }
+  pageChange(pageEvent: PageEvent) {
+    if (pageEvent) {
+      this.service.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe(res => { 
+        this.dataSource.data = res._embedded[Object.keys(res._embedded)[0]]; 
+        this.length = res.page.totalElements;
+      });
+
+    }
+    return this.dataSource;
   }
 
 }

@@ -32,7 +32,7 @@
         <mat-label>模型类</mat-label>
         <input matInput [(ngModel)]="o.id.model" />
       </mat-form-field>
-      <span *ngIf="o.action!='new'">{{o.id.model}}</span>
+      <span *ngIf="o.action!='new'">{{o._links.self.href.split('/').splice(-1).toString().split(',')[0]}}</span>
     </td>
   </ng-container>
   <ng-container matColumnDef="field">
@@ -42,7 +42,7 @@
         <mat-label>字段</mat-label>
         <input matInput [(ngModel)]="o.id.field" />
       </mat-form-field>
-      <span *ngIf="o.action!='new'">{{o.id.field}}</span>
+      <span *ngIf="o.action!='new'">{{o._links.self.href.split('/').splice(-1).toString().split(',')[1]}}</span>
 
     </td>
   </ng-container>

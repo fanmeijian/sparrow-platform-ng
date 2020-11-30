@@ -9,8 +9,8 @@ export class FieldPermissionService {
 
   constructor(private http:HttpClient) { }
 
-  list(){
-    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/fields");
+  list(page:number,size:number){
+    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/swdFieldPermissions",{params:{size: size.toString(),page: page.toString()}});
   }
 
   listUsers(o:any){
@@ -28,14 +28,14 @@ export class FieldPermissionService {
   }
 
   put(o:any){
-    return this.http.put(GlobalVariable.BASE_API_URL+"/fields",o);
+    return this.http.patch(GlobalVariable.BASE_API_URL+"/swdFieldPermissions",o);
   }
 
   post(o:any){
-    return this.http.post(GlobalVariable.BASE_API_URL+'/fields',o);
+    return this.http.post(GlobalVariable.BASE_API_URL+'/swdFieldPermissions',o);
   }
 
   delete(id:any){
-    return this.http.request('delete',GlobalVariable.BASE_API_URL+'/fields',{body:id});
+    return this.http.request('delete',id._links.self.href);
   }
 }

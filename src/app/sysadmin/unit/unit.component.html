@@ -45,10 +45,10 @@
     <ng-container matColumnDef="parent">
         <th mat-header-cell *matHeaderCellDef> 上级部门 </th>
         <td mat-cell *matCellDef="let o">
-            <span *ngIf="!o.action">{{o.code}}</span>
+            <span *ngIf="!o.action">{{o.parentId}}</span>
             <mat-form-field *ngIf="o.action">
                 <!-- <mat-label>代码</mat-label> -->
-                <input matInput [(ngModel)]="o.code" />
+                <input matInput [(ngModel)]="o.parentId" />
             </mat-form-field>
         </td>
     </ng-container>

@@ -25,8 +25,8 @@ export class SysroleService {
   }
 
 
-  list(){
-    return this.http.get<any>(this.baseUrl);
+  list(page:number,size: number){
+    return this.http.get<any>(this.baseUrl,{ params: { 'size': size.toString(), 'page': page.toString() } });
   }
 
   post(o:any){
