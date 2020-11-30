@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class AuthorityComponent implements OnInit {
 
   authorities: any[];
-  columnsToDisplay = ["id", "name", "url", "operation"];
+  columnsToDisplay = ["id", "name", "url", 'method', 'permission', "operation"];
   dataSource: MatTableDataSource<any>;
 
   length: any;
@@ -57,20 +57,25 @@ export class AuthorityComponent implements OnInit {
 
   save(o: any, i: number) {
     if (o.edit) {
-      delete o.edit;
-      this.service.put(o).subscribe();
+      
+      this.service.put(o).subscribe(res=>{
+        delete o.edit;
+      });
     }
-    if (o.new) {
-      delete o.new;
+    if (o.new) {      
       this.service.post(o).subscribe(res => {
         this.dataSource.data[i]._links = res._links;
         this.dataSource.filter = '';
+        delete o.new;
       });
     }
   }
 
   cancel(o: any, i: number) {
-    this.dataSource.data.splice(i, 1);
+    if(o.new)
+      this.dataSource.data.splice(i, 1);
+    else
+      o.edit = false;
     this.dataSource.filter = '';
   }
 

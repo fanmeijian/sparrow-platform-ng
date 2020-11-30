@@ -32,3 +32,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.table-responsive {
+  display: block;
+  overflow-x: auto; 
+  margin: 10px;
+}
+
+.paginator {
+  flex-shrink: 0;
+}

@@ -13,8 +13,8 @@
         <mat-label>URL</mat-label>
         <input matInput [(ngModel)]="flatNodeMap.get(node).url">
       </mat-form-field>
-      <button mat-button (click)="saveNode(node)">保存</button>
-      <button mat-button (click)="cancelNode(node)">取消</button>
+      <button mat-icon-button color='primary' (click)="saveNode(node);"><mat-icon>done</mat-icon></button>
+      <button mat-icon-button color='primary' (click)="cancelNode(node)"><mat-icon>close</mat-icon></button>
     </mat-tree-node>
 
     <mat-tree-node *matTreeNodeDef="let node;" matTreeNodePadding>
@@ -25,7 +25,7 @@
       </button>
       <button *ngIf="!node.expandable" mat-icon-button disabled [attr.aria-label]="'Toggle ' + node.item">
       </button>
-      <ng-container *ngIf="node.action!='edit'; else elseTemplate">
+      <ng-container *ngIf="flatNodeMap.get(node).action!='edit'; else elseTemplate">
         <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)"
           (change)="todoItemSelectionToggle(node)">{{flatNodeMap.get(node).id+node.item+flatNodeMap.get(node).url}}
         </mat-checkbox>
@@ -33,10 +33,10 @@
           <mat-icon>add</mat-icon>
         </button>
         <input matInput hidden #edit>
-        <button mat-icon-button (click)=" node.action='edit';">
+        <button mat-icon-button color='primary' (click)=" flatNodeMap.get(node).action='edit';">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button *ngIf="!node.expandable" (click)="deleteItem(node);">
+        <button mat-icon-button color='warn' *ngIf="!node.expandable" (click)="deleteItem(node);">
           <mat-icon>delete</mat-icon>
         </button>
       </ng-container>
@@ -50,8 +50,8 @@
           <mat-label>URL</mat-label>
           <input matInput [(ngModel)]="flatNodeMap.get(node).url">
         </mat-form-field>
-        <button mat-button (click)="saveNode(node);node.action='';">保存</button>
-        <button mat-button (click)="node.action='';">取消</button>
+        <button mat-icon-button color='primary' (click)="saveNode(node);node.action='';"><mat-icon>done</mat-icon></button>
+        <button mat-icon-button color='primary' (click)="node.action='';"><mat-icon>close</mat-icon></button>
       </ng-template>
     </mat-tree-node>
   </mat-tree>

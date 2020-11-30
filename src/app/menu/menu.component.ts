@@ -26,6 +26,7 @@ export class MenuNode extends SwdMenu{
   parentString: string;
   parentIdString: string;
   children: MenuNode[];
+  action: string;
 }
 
 /** 展开菜单节点 含可展开及层级信息 */
@@ -33,7 +34,7 @@ export class MenuFlatNode {
   item: string;
   level: number;
   expandable: boolean;
-  action: '';
+  action: string;
 }
 
 
@@ -68,6 +69,7 @@ export class ChecklistDatabase {
     newNode.url = '';
     newNode.id = '';
     newNode.children = [];
+    newNode.action = 'edit';
     if(!parentNode){
       newNode.parentId = '0';
       this.data.push(newNode);
@@ -87,14 +89,18 @@ export class ChecklistDatabase {
         this._snackBar.open('成功！','关闭',{duration: 2000});
         if(!parent)
           this.dataChange.next(this.data.filter(o=>o!=node));
-          // this.data.splice(this.data.findIndex(o=>o=node),1);
-        else
+        else{
           parent.children = parent.children.filter(o=>o!=node);
-        this.dataChange.next(this.data);
+          this.dataChange.next(this.data);
+        }
       })
     }else{
-      parent.children = parent.children.filter(o=>o!=node);
-      this.dataChange.next(this.data);
+      if(parent){
+        parent.children = parent.children.filter(o=>o!=node);
+        this.dataChange.next(this.data);
+      }
+      else
+        this.dataChange.next(this.data.filter(o=>o!=node));
     }
     
   }
@@ -104,6 +110,7 @@ export class ChecklistDatabase {
       this._snackBar.open('成功！','关闭',{duration: 2000});
       node.id = res._links.self.href;
       node.id = node.id.substring(node.id.lastIndexOf('/')+1);
+      node.action = '';
       this.dataChange.next(this.data);
     });
   }
@@ -177,6 +184,7 @@ export class MenuComponent implements OnInit {
     flatNode.item = node.name;
     flatNode.level = level;
     flatNode.expandable = !!node.children?.length;
+    flatNode.action = node.action;
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     this.nodeMap.set(node.id,node);
