@@ -1,41 +1,20 @@
-<mat-drawer-container class="rightcontent">
+<mat-drawer-container class="rightcontent" *ngIf="isLogin">
   <mat-drawer class="example-container" #drawer mode="side" opened="true">
-   
     <li class="logo">
-      
       <img src="../assets/pics/logo.jfif" height="64px">
       <span *ngIf="isLogin">欢迎您,{{username}}</span>
     </li>
-
-    
-    <!-- <mat-grid-list cols="2" style="width:100%;background-color: black;color: white;">
-      <mat-grid-tile style="text-align: left;"><img src="../assets/pics/logo.jfif" height="100%"></mat-grid-tile>
-      <mat-grid-tile><span *ngIf="isLogin">欢迎您,{{username}}</span></mat-grid-tile>
-    </mat-grid-list> -->
-
     <mat-tree class="tree" [dataSource]="dataSource" [treeControl]="treeControl">
-      <!-- This is the tree node template for leaf nodes -->
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [matTreeNodePaddingIndent]="20" >
-        <!-- use a disabled button to provide padding for tree leaf -->
-        <!-- <button mat-icon-button disabled></button> -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [matTreeNodePaddingIndent]="20">
         <a class="nodetext" routerLink="{{node.url}}">{{node.name}}</a>
       </mat-tree-node>
-      <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-        
-        <span class="parent" matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">{{node.name}} 
-        
-        </span>
-
+        <span class="parent" matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">{{node.name}}</span>
         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
-         
           <mat-icon>
-              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-            </mat-icon>
-          
-          </button>
-
-
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
       </mat-tree-node>
     </mat-tree>
   </mat-drawer>
@@ -45,13 +24,13 @@
         <i class="material-icons">menu</i>
       </button>
       <span class="title"></span>
-      
-      
-      
-      <button *ngIf="!isLogin" mat-flat-button [routerLink]="['/login']" routerLinkActive="router-link-active" >登录</button>
-      <button *ngIf="isLogin" mat-flat-button (click)="logout();" >注销</button>
+      <button *ngIf="!isLogin" mat-flat-button [routerLink]="['/login']"
+        routerLinkActive="router-link-active">登录</button>
+      <button *ngIf="isLogin" mat-flat-button (click)="logout();">注销</button>
     </mat-toolbar>
-    <div class="breadcrumb"><span style="vertical-align: -webkit-baseline-middle;">主页 / {{url}}</span></div>
+    <!-- <div class="breadcrumb"><span style="vertical-align: -webkit-baseline-middle;">主页 </span></div> -->
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
+
+<router-outlet *ngIf="!isLogin"></router-outlet>

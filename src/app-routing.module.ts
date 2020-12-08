@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { MenuComponent } from './app/menu/menu.component';
+import { MenuComponent } from './app/sysadmin/menu/menu.component';
 import { DashboardComponent } from './app/dashboard/dashboard.component';
-import { AuthorityComponent } from './app/authority/authority.component';
+import { AuthorityComponent } from './app/sysadmin/authority/authority.component';
 import { BpmComponent } from './app/bpm/bpm.component';
 import { SysroleComponent } from './app/sysadmin/sysrole/sysrole.component';
 import { UserComponent } from './app/sysadmin/user/user.component';
@@ -26,13 +26,14 @@ import { FlownoComponent } from './app/sysadmin/flowno/flowno.component';
 import { AppManagementComponent } from './app/sysadmin/app-management/app-management.component';
 import { DictComponent } from './app/sysadmin/dict/dict.component';
 
-
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'menu', component: MenuComponent,data: {
-    breadcrumb: '菜单管理'
-  }},
+  {
+    path: 'menu', component: MenuComponent, data: {
+      breadcrumb: '菜单管理'
+    }
+  },
   { path: 'authority', component: AuthorityComponent },
   { path: 'bpm', component: BpmComponent },
   { path: 'sysrole', component: SysroleComponent },
@@ -49,11 +50,11 @@ const routes: Routes = [
   { path: 'level', component: LevelComponent },
   { path: 'group', component: GroupComponent },
   { path: 'employee', component: EmployeeComponent },
-  {path:'login-log',component: LoginLogComponent},
-  { path:'operation-log', component: OperationLogComponent},
-  { path: 'flowno', component: FlownoComponent},
-  { path: 'app-management', component: AppManagementComponent},
-  { path: 'dict', component: DictComponent}
+  { path: 'login-log', component: LoginLogComponent },
+  { path: 'operation-log', component: OperationLogComponent },
+  { path: 'flowno', component: FlownoComponent },
+  { path: 'app-management', component: AppManagementComponent },
+  { path: 'dict', component: DictComponent }
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ import { GlobalVariable } from '../global';
   providedIn: 'root'
 })
 export class SysroleService {
-  baseUrl="http://localhost:6060/swdSysroles";
+  baseUrl=GlobalVariable.BASE_API_URL+"/swdSysroles";
 
   constructor(private http: HttpClient) { }
 

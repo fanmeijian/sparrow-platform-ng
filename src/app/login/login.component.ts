@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { LoginService } from '../service/login.service';
 import { Router } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
 @Component({
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.service.login(this.user).subscribe(res => {   
-      localStorage.setItem("idToken", res.data);
+      localStorage.setItem("idToken", res.access_token);
       localStorage.setItem("username", this.user.username);     
       this.router.navigateByUrl("/dashboard").then(()=>{window.location.reload()});
     });  

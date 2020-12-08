@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { AuthorityService } from '../service/authority.service'
+import { AuthorityService } from '../../service/authority.service'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';

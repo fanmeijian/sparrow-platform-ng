@@ -1,24 +1,28 @@
-<div>
-<p>
-
-    <mat-form-field appearance="fill">
-        <mat-label>登录名</mat-label>
-        <input matInput  [(ngModel)]="user.username">
-    </mat-form-field>
-
-</p>
-
-<p>
-
-    <mat-form-field appearance="fill">
-        <mat-label>密码</mat-label>
-        <input matInput [(ngModel)]="user.password">
-    </mat-form-field>
-
-</p>
-<p>
-    
-    <button mat-button (click)="login();">登录</button>
-</p>
-
+<div class="divcontainer"> 
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>登录</mat-card-title>
+            <mat-card-subtitle>用户登录</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+            <p>
+                <mat-form-field appearance="fill">
+                    <mat-label>登录名</mat-label>
+                    <input matInput [(ngModel)]="user.username">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill">
+                    <mat-label>密码</mat-label>
+                    <input type="password" matInput [(ngModel)]="user.password">
+                </mat-form-field>
+            </p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="login();">登录</button>
+        </mat-card-actions>
+    </mat-card>
+    <div style="padding: 10px;">Picture is refered from Angular Material</div>
 </div>

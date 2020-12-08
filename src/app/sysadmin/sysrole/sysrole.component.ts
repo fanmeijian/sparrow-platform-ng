@@ -92,7 +92,7 @@ export class SysroleComponent implements OnInit {
     if (o.action=="edit") {
       this.service.put(o).subscribe(res => { o = res });
     } else {
-      this.service.post(o).subscribe(res => { this.dataSource.data.splice(i, 1); this.dataSource.data.splice(i, 0, res); this.list.filter = "" });
+      this.service.post(o).subscribe(res => { this.dataSource.data.splice(i, 1); this.dataSource.data.splice(i, 0); this.dataSource.filter = "" });
     }
     delete o.action;
   }

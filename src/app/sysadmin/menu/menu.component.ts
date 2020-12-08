@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { MenuService } from '../service/menu.service'
+import { MenuService } from '../../service/menu.service'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,7 +12,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { Directive } from '@angular/core';
-import { SwdMenu } from '../global';
+import { SwdMenu } from '../../global';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 

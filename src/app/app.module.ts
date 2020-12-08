@@ -25,9 +25,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import {MatTableModule} from '@angular/material/table';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './sysadmin/menu/menu.component';
 import { FormsModule } from '@angular/forms';
-import { AuthorityComponent } from './authority/authority.component';
+import { AuthorityComponent } from './sysadmin/authority/authority.component';
 import { NgBpmnEditorModule } from 'ng-bpmn';
 import { BpmComponent } from './bpm/bpm.component'
 import {MatSelectModule} from '@angular/material/select';
@@ -59,7 +59,7 @@ import { OperationLogComponent } from './sysadmin/operation-log/operation-log.co
 import { FlownoComponent } from './sysadmin/flowno/flowno.component';
 import { AppManagementComponent } from './sysadmin/app-management/app-management.component';
 import { DictComponent } from './sysadmin/dict/dict.component';
-
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -118,7 +118,8 @@ import { DictComponent } from './sysadmin/dict/dict.component';
     MatSelectModule,
     HttpClientModule,
     MatButtonToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatRadioModule
     
     
   ],
