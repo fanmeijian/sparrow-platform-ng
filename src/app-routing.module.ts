@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { MenuComponent } from './app/sysadmin/menu/menu.component';
 import { DashboardComponent } from './app/dashboard/dashboard.component';
 import { AuthorityComponent } from './app/sysadmin/authority/authority.component';
-import { BpmComponent } from './app/bpm/bpm.component';
 import { SysroleComponent } from './app/sysadmin/sysrole/sysrole.component';
 import { UserComponent } from './app/sysadmin/user/user.component';
 import { LoginComponent } from './app/login/login.component';
@@ -35,7 +34,6 @@ const routes: Routes = [
     }
   },
   { path: 'authority', component: AuthorityComponent },
-  { path: 'bpm', component: BpmComponent },
   { path: 'sysrole', component: SysroleComponent },
   { path: 'user', component: UserComponent },
   { path: "login", component: LoginComponent },

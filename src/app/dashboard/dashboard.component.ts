@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalVariable } from '../global';
+import { UserTaskInstance } from '../../app/model/user-task-instance'
+import { MatDialog } from '@angular/material/dialog';
+import { TemplateRef } from '@angular/core';
+import { KogitoFlowService } from '../../app/service/kogito-flow.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -9,9 +13,19 @@ import { GlobalVariable } from '../global';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+
+  totalElements: number;
+  pageSize: number;
+  userTaskInstance: UserTaskInstance;
+  cooperativeIntention: boolean;
+
   dataSource = new MatTableDataSource<any>();
-  constructor(private http: HttpClient) { }
-  columnsToDisplay=['id','name','code','member','stat','operation'];
+  constructor(private http: HttpClient, private dialog: MatDialog, private kogitoFlowService: KogitoFlowService) { }
+  columnsToDisplay = ['id', 'name', 'code', 'member', 'stat', 'operation'];
+
+  kogitoFlows:any[];
+
   ngOnInit(): void {
     let gql = `{
       UserTaskInstances(where:{potentialGroups:{contains:"trial-follower"}}){
@@ -24,20 +38,63 @@ export class DashboardComponent implements OnInit {
         endpoint,
         processId,
         processInstanceId,
-        id
+        id,
+        inputs,
+        outputs
       }
     }`;
 
-    this.http.post<any>(GlobalVariable.KOGITO_GQL_URL+'/graphql',{query: gql}).subscribe(res=>{
+    this.http.post<any>(GlobalVariable.KOGITO_GQL_URL + '/graphql', { query: gql }).subscribe(res => {
       this.dataSource.data = res.data.UserTaskInstances;
+    });
+
+    this.kogitoFlowService.get().subscribe(res=>{
+      this.kogitoFlows = res._embedded.kogitoFlows;
     });
   }
 
-  complete(){
-    // this.http.post(this.host + '/sparrowTrial/5ffa60cb-e187-4343-9d4e-407e658e155c/trialFollow/4f84791e-b67c-4277-8762-dacb043d9ca2?phase=complete',{cooperativeIntention: this.process.cooperativeIntention}).subscribe(res=>{
-    //   console.log(res);
-    // });
+  approval(endPoint: string, cooperativeIntention: boolean) {
+    this.http.post(endPoint, { cooperativeIntention: cooperativeIntention }).subscribe(res => {
+      console.log(res);
+      this.dialog.closeAll();
+      this.ngOnInit();
+    });
   }
 
+  applyTrial(trial: any){
+    this.kogitoFlowService.startProcess(trial.flow.processId,{'trialApply':trial.data}).subscribe(res=>{
+      console.log(res);
+      this.dialog.closeAll();
+    });
+  }
+
+  pageChange(enent: any) {
+
+  }
+
+  @ViewChild('sparrowTrial') sparrowTrialTmp: TemplateRef<any>;
+  startProcess(kogitoFlow: any) {
+    this.dialog.open(this.sparrowTrialTmp,{data: {data: new Object(), flow: kogitoFlow}});
+  }
+
+
+  @ViewChild('kogitoFlowsT') kogitoFlowsT: TemplateRef<any>;
+  listFlow() {
+    this.dialog.open(this.kogitoFlowsT,{data: new Object()});
+  }
+
+  // startProcess(data: any) {
+  //   this.kogitoFlowService.post
+  // }
+
+  @ViewChild('userTaskInfo') userTaskInfoTmpl: TemplateRef<any>;
+  openUserTask(userTaskInfo: UserTaskInstance) {
+    // this.userTaskInstance = userTaskInfo;
+    userTaskInfo.inputs = typeof userTaskInfo.inputs === 'string' ? JSON.parse(userTaskInfo.inputs.toString()) : userTaskInfo.inputs;
+    userTaskInfo.outputs = userTaskInfo.outputs ? (typeof userTaskInfo.outputs === 'string' ? JSON.parse(userTaskInfo.outputs) : userTaskInfo.outputs) : new Object();
+
+    this.dialog.open(this.userTaskInfoTmpl, { data: userTaskInfo, width: '400px' });
+
+  }
 
 }

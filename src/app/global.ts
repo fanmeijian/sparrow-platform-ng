@@ -1,7 +1,22 @@
 export const GlobalVariable = Object.freeze({
     BASE_API_URL: 'http://localhost:8091/sparrow-platform',
     OAUTH_URL: 'http://localhost:6060',
-    KOGITO_GQL_URL: 'http://localhost:8180'
+    KOGITO_GQL_URL: 'http://localhost:8180',
+    SPARROW_BPM_URL: 'http://localhost:8091/sparrow-bpm'
+    //... more of your variables
+});
+
+
+export const HumanTaskAction = Object.freeze({
+    START: 'start',
+    STOP: 'stop',
+    RELEASE: 'release',
+    SUSPEND: 'suspend',
+    RESUME: 'resume',
+    SKIP: 'skip',
+    DELEGATE: 'delegate',
+    COMPLETE: 'complete',
+    CLAIM: 'claim'
     //... more of your variables
 });
 
@@ -77,23 +92,3 @@ export class KogitoModel{
     nodeId: number;
     type: string;
 }
-
-export class UserTaskInstance{
-    id: string;
-    adminGroups: string[];
-    adminUsers: string[];
-    endpoint: string;
-    excludedUsers: string[];
-    inputs: any;
-    lastUpdate: string;
-    name: string;
-    outputs: any;
-    potentialGroups: string[];
-    potentialUsers: string[];
-    processId: string;
-    processInstanceId: string;
-    referenceName: string;
-    started: string;
-    state: string;
-}
-

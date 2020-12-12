@@ -6,6 +6,7 @@ import {
 import { Observable } from 'rxjs';
 import { LoginService } from './service/login.service'
 import { Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
@@ -31,7 +32,11 @@ export class AuthInterceptor implements HttpInterceptor {
     // console.log(idToken);
 
     if (idToken) {
-      const authReq = req.clone({ setHeaders: { Authorization: "Bearer " + idToken } });
+      const headers1 = new HttpHeaders();
+      headers1.set('Content-Type', 'application/json; charset=utf-8');
+      headers1.set('Authorization', "Bearer " + idToken);
+      // const authReq = req.clone({ setHeaders: { Authorization: "Bearer " + idToken } });
+      const authReq = req.clone({ setHeaders: { Authorization: "Bearer " + idToken, 'Content-Type': 'application/json; charset=utf-8' } });
       // console.log("--++++++++++++++++---"+authReq.headers.get("Authorization"));
       return next.handle(authReq);
     }
