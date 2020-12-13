@@ -24,6 +24,7 @@ import { OperationLogComponent } from './app/sysadmin/operation-log/operation-lo
 import { FlownoComponent } from './app/sysadmin/flowno/flowno.component';
 import { AppManagementComponent } from './app/sysadmin/app-management/app-management.component';
 import { DictComponent } from './app/sysadmin/dict/dict.component';
+import { KogitoFlowComponent } from './app/bpm/kogito-flow/kogito-flow.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -52,7 +53,8 @@ const routes: Routes = [
   { path: 'operation-log', component: OperationLogComponent },
   { path: 'flowno', component: FlownoComponent },
   { path: 'app-management', component: AppManagementComponent },
-  { path: 'dict', component: DictComponent }
+  { path: 'dict', component: DictComponent },
+  { path: 'kogito-flow', component: KogitoFlowComponent}
 ];
 
 @NgModule({

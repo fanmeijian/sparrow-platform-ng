@@ -1,1 +1,8 @@
 <p>kogito-flow works!</p>
+
+
+<form [formGroup]="formGroup">
+    <dynamic-material-form [group]="formGroup" [model]="formModel"></dynamic-material-form>                      
+</form>
+
+<button mat-button (click)="storeForm()">查看json</button>

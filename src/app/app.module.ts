@@ -60,6 +60,10 @@ import { AppManagementComponent } from './sysadmin/app-management/app-management
 import { DictComponent } from './sysadmin/dict/dict.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { KogitoFlowComponent } from './bpm/kogito-flow/kogito-flow.component';
+import { DynamicFormsMaterialUIModule } from "@ng-dynamic-forms/ui-material";
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [
@@ -119,7 +123,9 @@ import { KogitoFlowComponent } from './bpm/kogito-flow/kogito-flow.component';
     HttpClientModule,
     MatButtonToggleModule,
     MatPaginatorModule,
-    MatRadioModule
+    MatRadioModule,
+    DynamicFormsMaterialUIModule,
+    ReactiveFormsModule
 
 
   ],
