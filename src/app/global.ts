@@ -2,7 +2,7 @@ export const GlobalVariable = Object.freeze({
     BASE_API_URL: 'http://localhost:8091/sparrow-platform',
     OAUTH_URL: 'http://localhost:6060',
     KOGITO_GQL_URL: 'http://localhost:8180',
-    SPARROW_BPM_URL: 'http://localhost:8091/sparrow-bpm'
+    SPARROW_BPM_URL: 'http://localhost:8092/sparrow-bpm'
     //... more of your variables
 });
 

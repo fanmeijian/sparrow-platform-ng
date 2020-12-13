@@ -6,6 +6,8 @@ import { UserTaskInstance } from '../../app/model/user-task-instance'
 import { MatDialog } from '@angular/material/dialog';
 import { TemplateRef } from '@angular/core';
 import { KogitoFlowService } from '../../app/service/kogito-flow.service'
+import { PageEvent } from '@angular/material/paginator';
+import { Pageable } from '../model/pageable';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,36 +18,43 @@ export class DashboardComponent implements OnInit {
 
 
   totalElements: number;
-  pageSize: number;
+  pageSize: number = 10;
   userTaskInstance: UserTaskInstance;
   cooperativeIntention: boolean;
 
   dataSource = new MatTableDataSource<any>();
   constructor(private http: HttpClient, private dialog: MatDialog, private kogitoFlowService: KogitoFlowService) { }
-  columnsToDisplay = ['id', 'name', 'code', 'member', 'stat', 'operation'];
+  columnsToDisplay = ['id', 'name', 'code', 'started', 'stat','user','group', 'operation'];
 
   kogitoFlows:any[];
 
   ngOnInit(): void {
-    let gql = `{
-      UserTaskInstances(where:{potentialGroups:{contains:"trial-follower"}}){
-        name,
-        started,
-        potentialGroups,
-        potentialUsers,
-        state,
-        referenceName,
-        endpoint,
-        processId,
-        processInstanceId,
-        id,
-        inputs,
-        outputs
-      }
-    }`;
+    // let gql = `{
+    //   UserTaskInstances(where:{potentialGroups:{contains:"trial-follower"}}){
+    //     name,
+    //     started,
+    //     potentialGroups,
+    //     potentialUsers,
+    //     state,
+    //     referenceName,
+    //     endpoint,
+    //     processId,
+    //     processInstanceId,
+    //     id,
+    //     inputs,
+    //     outputs
+    //   }
+    // }`;
 
-    this.http.post<any>(GlobalVariable.KOGITO_GQL_URL + '/graphql', { query: gql }).subscribe(res => {
-      this.dataSource.data = res.data.UserTaskInstances;
+    // this.http.post<any>(GlobalVariable.KOGITO_GQL_URL + '/graphql', { query: gql }).subscribe(res => {
+    //   this.dataSource.data = res.data.UserTaskInstances;
+    // });
+      let pageable: Pageable = new Pageable();
+      pageable.sort = 'started';
+      pageable.direction = 'desc';
+      this.kogitoFlowService.userTask(pageable).subscribe(res=>{
+      this.dataSource.data = res.content;
+      this.totalElements = res.totalElements;
     });
 
     this.kogitoFlowService.get().subscribe(res=>{
@@ -63,13 +72,26 @@ export class DashboardComponent implements OnInit {
 
   applyTrial(trial: any){
     this.kogitoFlowService.startProcess(trial.flow.processId,{'trialApply':trial.data}).subscribe(res=>{
-      console.log(res);
+      this.ngOnInit();
       this.dialog.closeAll();
     });
   }
 
-  pageChange(enent: any) {
+  //翻页事件
+  pageChange(pageEvent: PageEvent) {
+    if (pageEvent) {
+      let pageable: Pageable = new Pageable();
+      pageable.page = pageEvent.pageIndex;
+      pageable.size = pageEvent.pageSize;
+      pageable.sort = 'started';
+      pageable.direction = 'desc';
+      this.kogitoFlowService.userTask(pageable).subscribe(res => { 
+        this.dataSource.data = res.content;
+        this.totalElements = res.totalElements;
+       });
 
+    }
+    return this.dataSource;
   }
 
   @ViewChild('sparrowTrial') sparrowTrialTmp: TemplateRef<any>;
