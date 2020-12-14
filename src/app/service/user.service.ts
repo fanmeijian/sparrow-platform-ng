@@ -67,4 +67,9 @@ export class UserService {
   saveUserSysroles(o: any) {
     return this.http.post(GlobalVariable.BASE_API_URL + "/userSysroles", o);
   }
+
+  findByUsernameContaining(searchName: string){
+    return this.http.get<any>(GlobalVariable.BASE_API_URL + "/swdUsers/search/findByUsernameContaining",{params: {username: searchName}} );
+  }
+  
 }

@@ -62,7 +62,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { KogitoFlowComponent } from './bpm/kogito-flow/kogito-flow.component';
 import { DynamicFormsMaterialUIModule } from "@ng-dynamic-forms/ui-material";
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autoComplete';
+import { UserFlowComponent } from './bpm/user-flow/user-flow.component';
+import { SysroleFlowComponent } from './bpm/sysrole-flow/sysrole-flow.component'
 
 
 @NgModule({
@@ -96,7 +99,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FlownoComponent,
     AppManagementComponent,
     DictComponent,
-    KogitoFlowComponent
+    KogitoFlowComponent,
+    UserFlowComponent,
+    SysroleFlowComponent
   ],
   imports: [
     BrowserModule,
@@ -125,7 +130,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatRadioModule,
     DynamicFormsMaterialUIModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatChipsModule,
+    MatAutocompleteModule
 
 
   ],

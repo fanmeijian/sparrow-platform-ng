@@ -57,7 +57,9 @@ export class DashboardComponent implements OnInit {
       this.totalElements = res.totalElements;
     });
 
-    this.kogitoFlowService.get().subscribe(res=>{
+    let pageable1: Pageable = new Pageable();
+    pageable1.isPaged = false;
+    this.kogitoFlowService.get(pageable1).subscribe(res=>{
       this.kogitoFlows = res._embedded.kogitoFlows;
     });
   }
