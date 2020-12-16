@@ -8,28 +8,33 @@ import { FieldPermissionService } from '../../service/field-permission.service';
   styleUrls: ['./user-field-permission.component.css']
 })
 export class UserFieldPermissionComponent implements OnInit {
-  list: any[];
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any, private service: FieldPermissionService) { }
-
-  ngOnInit(): void {
-    this.service.listUsers(this.dialogData).subscribe(res => this.list = res);
+  userFieldPermissions: any[];
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any, private service: FieldPermissionService) {
     this.userFieldPermission = new Object();
     this.userFieldPermission.id = new Object();
   }
 
-  userFieldPermission: any;
-  saveFieldPermission() {
-    console.log(this.dialogData);
-    this.userFieldPermission.id.model=this.dialogData.id.model;
-    this.userFieldPermission.id.field=this.dialogData.id.field;
-    this.service.saveUserFieldPermission(this.userFieldPermission).subscribe(res=>this.list.push(res));
+  ngOnInit(): void {
+    this.service.listUsers(this.dialogData).subscribe(res => this.userFieldPermissions = res._embedded.swdUserFieldPermissions);
   }
 
-  removeUserPermission(id:any){
+  userFieldPermission: any;
+  saveFieldPermission(userFieldPermission) {
+    console.log(this.dialogData);
+    userFieldPermission.id.model = this.dialogData._links.self.href.split('/').splice(-1)[0].split(',')[0];
+    userFieldPermission.id.field = this.dialogData._links.self.href.split('/').splice(-1)[0].split(',')[1];
+    userFieldPermission.id.permission = this.dialogData._links.self.href.split('/').splice(-1)[0].split(',')[2];
+    this.service.saveUserFieldPermission(userFieldPermission).subscribe(res => {
+      if (res.status === 201)
+        // this.userFieldPermissions.push(res.body);
+        this.ngOnInit();
+    });
+  }
+
+  removeUserPermission(id: any) {
     console.log(id);
-    this.list=this.list.filter(o=>o.id!=id);
+    this.userFieldPermissions = this.userFieldPermissions.filter(o => o.id != id);
     return this.service.removeUserFieldPermission(id).subscribe();
-    
   }
 
 }

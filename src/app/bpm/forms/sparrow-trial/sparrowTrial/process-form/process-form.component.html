@@ -1,0 +1,35 @@
+
+    <mat-card>
+        <mat-card-title>{{data.flow.name}}</mat-card-title>
+        <mat-card-content>
+            <p>
+                <mat-form-field>
+                    <mat-label>姓名</mat-label>
+                    <input matInput [(ngModel)]="data.data.name">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <mat-label>公司</mat-label>
+                    <input matInput [(ngModel)]="data.data.company">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <mat-label>邮箱</mat-label>
+                    <input matInput [(ngModel)]="data.data.email">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <mat-label>手机</mat-label>
+                    <input matInput [(ngModel)]="data.data.mobile">
+                </mat-form-field>
+            </p>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-button color='primary' [mat-dialog-close]>关闭</button>
+            <button mat-button color='primary' (click)="applyTrial(data);">提交</button>
+        </mat-card-actions>
+    </mat-card>

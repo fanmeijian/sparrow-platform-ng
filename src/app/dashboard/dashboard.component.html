@@ -114,57 +114,18 @@
 </ng-template>
 
 
-<ng-template #sparrowTrial let-data>
-    
-    <mat-card>
-        <mat-card-title>{{data.flow.name}}</mat-card-title>
-        <mat-card-content>
-            <p>
-            <mat-form-field>
-                <mat-label>姓名</mat-label>
-                <input matInput [(ngModel)]="data.data.name">
-            </mat-form-field>
-            </p>
-            <p>
-            <mat-form-field>
-                <mat-label>公司</mat-label>
-                <input matInput [(ngModel)]="data.data.company">
-            </mat-form-field>
-        </p>
-        <p>
-            <mat-form-field>
-                <mat-label>邮箱</mat-label>
-                <input matInput [(ngModel)]="data.data.email">
-            </mat-form-field>
-        </p>
-        <p>
-            <mat-form-field>
-                <mat-label>手机</mat-label>
-                <input matInput [(ngModel)]="data.data.mobile">
-            </mat-form-field>
-        </p>
-        </mat-card-content>
-        
-        <mat-card-actions>
-            <button mat-button color='primary' [mat-dialog-close]>关闭</button>
-            <button mat-button color='primary' (click)="applyTrial(data);">提交</button>
-            
-        </mat-card-actions>
-    </mat-card>
-</ng-template>
-
 <ng-template #kogitoFlowsT let-data>
     <mat-form-field appearance="fill">
         <mat-label>请选择发起的流程</mat-label>
-        <mat-select [(ngModel)] = "data.data">
-          <mat-option *ngFor="let kogitoFlow of kogitoFlows" [value]="kogitoFlow">
+        <mat-select [(ngModel)] = "data.selected">
+          <mat-option *ngFor="let kogitoFlow of data.myKogitoFlow" [value]="kogitoFlow">
             {{kogitoFlow.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <p>
         <button mat-button color='primary' [mat-dialog-close]>关闭</button>
-        <button mat-button color='primary' [mat-dialog-close] (click)="startProcess(data.data);">启动</button>
+        <button mat-button color='primary' [mat-dialog-close] (click)="startProcess(data.selected);">启动</button>
          
       </p>
            

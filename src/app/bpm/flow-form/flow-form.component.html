@@ -1,0 +1,77 @@
+
+<div class="table-responsive">
+    <button mat-button color="primary">部署流程</button>
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="sn">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let o; let i = index">
+                <span>{{i+1}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> id </th>
+            <td mat-cell *matCellDef="let o">
+                <span>{{o._links.self.href.split('/').splice(-1)[0]}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="processId">
+            <th mat-header-cell *matHeaderCellDef> 关联流程 </th>
+            <td mat-cell *matCellDef="let o">
+                <span *ngIf="!o.action">{{o.processId}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taskId">
+            <th mat-header-cell *matHeaderCellDef> 关联task </th>
+            <td mat-cell *matCellDef="let o">
+                <span *ngIf="!o.action">{{o.processId}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operation">
+            <th mat-header-cell *matHeaderCellDef> 操作 </th>
+            <td mat-cell *matCellDef="let o;let i = index">
+                <ng-container *ngIf="!o.action">
+                    <!-- <button mat-button color="warn" (click)="delete(o)">
+                        删除
+                    </button> -->
+
+                    <button mat-button color="primary" (click)="openFlowForm(o);">
+                        查看
+                    </button>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay;sticky:true"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+
+    </table>
+</div>
+
+<mat-paginator class='paginator' [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons (page)="pageChange($event);">
+</mat-paginator>
+
+<textarea matInput [(ngModel)]="aaa"></textarea>
+
+<button mat-button (click)="restoreForm();" [mat-dialog-close] cdkFocusInitial>保存表单</button>
+
+
+<form [formGroup]="formGroup">
+    <dynamic-material-form [group]="formGroup" [model]="formModel"></dynamic-material-form>
+</form>
+
+<ng-template #tlFlowForm let-data>
+    <h2 mat-dialog-title>流程表单</h2>
+    <mat-dialog-content>
+    
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button [mat-dialog-close]>关闭</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    </mat-dialog-actions>
+</ng-template>

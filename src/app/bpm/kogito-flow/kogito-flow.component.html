@@ -48,9 +48,9 @@
             <th mat-header-cell *matHeaderCellDef> 操作 </th>
             <td mat-cell *matCellDef="let o;let i = index">
                 <ng-container *ngIf="!o.action">
-                    <button mat-button color="warn" (click)="delete(o)">
+                    <!-- <button mat-button color="warn" (click)="delete(o)">
                         删除
-                    </button>
+                    </button> -->
 
                     <button mat-button color="primary" (click)="openUserFlow(o);">
                         用户授权
@@ -76,23 +76,30 @@
 <ng-template #tlNewFlow let-data>
     <h2 mat-dialog-title>部署流程</h2>
     <mat-dialog-content>
-        <p>
             <mat-form-field appearance="fill"> 
                 <mat-label>名称</mat-label>
                 <input matInput [(ngModel)]="data.name">
             </mat-form-field>
-        </p>
-        <p>
             <mat-form-field appearance="fill">
                 <mat-label>流程id</mat-label>
                 <input matInput [(ngModel)]="data.processId">
             </mat-form-field>
-        </p>
-        <p>
             <mat-form-field appearance="fill">
                 <mat-label>微服务名</mat-label>
                 <input matInput [(ngModel)]="data.serviceName">
             </mat-form-field>
+        <p>
+            <button mat-icon-button (click)="data.userTaskIds.push('aaaa')">
+                <mat-icon>add</mat-icon>
+              </button>
+              用户任务
+              <li *ngFor="let userTaskId of data.userTaskIds;let i = index">
+                {{i+1}}. 
+                <mat-form-field>
+                    <mat-label></mat-label>
+                <input matInput [(ngModel)]="data.userTaskIds[i]" [value]="userTaskId">
+                </mat-form-field>
+              </li>
         </p>
     </mat-dialog-content>
     <mat-dialog-actions>
@@ -102,8 +109,3 @@
     </mat-dialog-actions>
 </ng-template>
 
-<form [formGroup]="formGroup">
-    <dynamic-material-form [group]="formGroup" [model]="formModel"></dynamic-material-form>
-</form>
-
-<button mat-button (click)="storeForm()">查看json</button>

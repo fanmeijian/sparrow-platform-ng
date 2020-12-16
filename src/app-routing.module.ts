@@ -25,6 +25,8 @@ import { FlownoComponent } from './app/sysadmin/flowno/flowno.component';
 import { AppManagementComponent } from './app/sysadmin/app-management/app-management.component';
 import { DictComponent } from './app/sysadmin/dict/dict.component';
 import { KogitoFlowComponent } from './app/bpm/kogito-flow/kogito-flow.component';
+import { FlowFormComponent } from './app/bpm/flow-form/flow-form.component';
+import { ProcessFormComponent } from './app/bpm/forms/sparrow-trial/sparrowTrial/process-form/process-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -54,7 +56,9 @@ const routes: Routes = [
   { path: 'flowno', component: FlownoComponent },
   { path: 'app-management', component: AppManagementComponent },
   { path: 'dict', component: DictComponent },
-  { path: 'kogito-flow', component: KogitoFlowComponent}
+  { path: 'kogito-flow', component: KogitoFlowComponent},
+  { path: 'flow-form', component: FlowFormComponent},
+  { path: 'sparrow-trial', component: ProcessFormComponent }
 ];
 
 @NgModule({

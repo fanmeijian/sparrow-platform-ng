@@ -1,1 +1,27 @@
-<p>sysrole-field-permission works!</p>
+<h1>
+    字段权限设置：{{dialogData._links.self.href.split('/').splice(-1)}}
+</h1>
+<mat-dialog-content style="height: 300px;">
+<p>
+    <mat-form-field>
+        <mat-label>请输入角色</mat-label>
+        <input matInput [(ngModel)]="sysroleFieldPermission.id.sysroleId"/>
+    </mat-form-field>
+</p>
+    <mat-form-field  style="width: 100%;">
+        <mat-label>表达式</mat-label>
+        <textarea matInput [(ngModel)]="sysroleFieldPermission.permissionEl"></textarea>
+    </mat-form-field>
+
+<p>
+    <button mat-flat-button color="primary" (click)="saveFieldPermission(sysroleFieldPermission);">保存</button>
+</p>
+
+<li *ngFor="let sysroleFieldPermission of sysroleFieldPermissions">
+    <button mat-flat-button color="warn" (click)="removeUserPermission(sysroleFieldPermission);">移除</button> {{sysroleFieldPermission._links.self.href.split('/').splice(-1)[0].split(',')[3]}} {{sysroleFieldPermission._links.self.href.split('/').splice(-1)[0].split(',')[2]}}<br />{{sysroleFieldPermission.permissionEl}}
+    
+</li>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-dialog-close cdkFocusInitial mat-flat-button color="primary">关闭</button>
+</mat-dialog-actions>

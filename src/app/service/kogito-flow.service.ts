@@ -22,6 +22,10 @@ export class KogitoFlowService {
     return this.http.get<any>(GlobalVariable.SPARROW_BPM_URL+"/kogitoFlows",{params: pageable.getHttpParams()});
   }
 
+  myKogitoFlow(){
+    return this.http.get<any>(GlobalVariable.SPARROW_BPM_URL+"/myKogitoFlow");
+  }
+
   userTask(pageable: Pageable){ 
     return this.http.get<any>(GlobalVariable.SPARROW_BPM_URL+"/userTask",{params: pageable.getHttpParams()});
   }
@@ -47,4 +51,13 @@ export class KogitoFlowService {
   saveSysroleFlow(data: any){
     return this.http.post<any>(GlobalVariable.SPARROW_BPM_URL+"/sysroleFlows",data);
   }
+
+  saveForm(formString: any){
+    return this.http.post<any>(GlobalVariable.SPARROW_BPM_URL+"/flowForms",{formString: formString});
+  }
+
+  getFlowForm(pageable: Pageable){
+    return this.http.get<any>(GlobalVariable.SPARROW_BPM_URL+"/flowForms",{params: pageable.getHttpParams()});
+  }
+
 }

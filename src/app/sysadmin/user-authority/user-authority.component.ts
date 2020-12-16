@@ -16,7 +16,7 @@ export class UserAuthorityComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any) { }
 
   ngOnInit(): void {
-    this.authorityService.listWithUser(this.dialogData._links.self.href.split("/").slice(-1)).subscribe(res=>this.authorities=res);
+    this.authorityService.listWithUser(this.dialogData._links.self.href.split("/").slice(-1)).subscribe(res=>this.authorities=res.data);
     // this.userServce.userAuthorities(this.dialogData).subscribe(res => {
     //   this.userAuthorities = res._embedded.swdAuthorities;
     //   this.authorityService.list().subscribe(userRes => {

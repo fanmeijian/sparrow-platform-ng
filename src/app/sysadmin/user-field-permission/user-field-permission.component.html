@@ -1,19 +1,11 @@
 <h1>
-    字段权限设置：{{dialogData.modelName +'->'+dialogData.fieldName}}
+    字段权限设置：{{dialogData._links.self.href.split('/').splice(-1)}}
 </h1>
 <mat-dialog-content style="height: 300px;">
 <p>
     <mat-form-field>
         <mat-label>请输入用户名</mat-label>
         <input matInput [(ngModel)]="userFieldPermission.id.username"/>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-        <mat-label>请选择权限</mat-label>
-        <mat-select [(value)]="userFieldPermission.id.permission"> 
-            <mat-option value="READ">读取</mat-option>
-            <mat-option value="EDIT">编辑</mat-option>
-        </mat-select>
     </mat-form-field>
 </p>
     <mat-form-field  style="width: 100%;">
@@ -22,11 +14,11 @@
     </mat-form-field>
 
 <p>
-    <button mat-flat-button color="primary" (click)="saveFieldPermission();">保存</button>
+    <button mat-flat-button color="primary" (click)="saveFieldPermission(userFieldPermission);">保存</button>
 </p>
 
-<li *ngFor="let o of list">
-    <button mat-flat-button color="warn" (click)="removeUserPermission(o.id);">移除</button> {{o.id.username}} {{o.id.permission}}<br />{{o.permissionEl}}
+<li *ngFor="let userFieldPermission of userFieldPermissions">
+    <button mat-flat-button color="warn" (click)="removeUserPermission(userFieldPermission);">移除</button> {{userFieldPermission._links.self.href.split('/').splice(-1)[0].split(',')[3]}} {{userFieldPermission._links.self.href.split('/').splice(-1)[0].split(',')[2]}}<br />{{userFieldPermission.permissionEl}}
     
 </li>
 </mat-dialog-content>

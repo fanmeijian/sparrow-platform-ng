@@ -18,12 +18,12 @@ export class AuthorityService {
   }
 
   listWithUser(username:string){
-    return this.http.get<any[]>(GlobalVariable.BASE_API_URL+"/authoritiesWithCheckByUser?username="+username);
+    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/authoritiesWithCheckByUser?username="+username);
   }
 
   listWithSysrole(sysroleId:string){
     //根据角色id返回带check属性的权限数组
-    return this.http.get<any[]>(GlobalVariable.BASE_API_URL+"/authoritiesWithCheckBySysrole?sysroleId="+sysroleId);
+    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/authoritiesWithCheckBySysrole?sysroleId="+sysroleId);
   }
 
   list(size:number,page:number){

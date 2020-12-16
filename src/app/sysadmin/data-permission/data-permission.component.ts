@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {DataPermissionService} from '../../service/data-permission.service'
+import { SysroleDataPermissionComponent } from '../sysrole-data-permission/sysrole-data-permission.component';
+import { UserDataPermissionComponent } from '../user-data-permission/user-data-permission.component';
 import { UserFieldPermissionComponent } from '../user-field-permission/user-field-permission.component';
 
 @Component({
@@ -33,11 +35,11 @@ export class DataPermissionComponent implements OnInit {
 
   
   showUsers(o: any) {
-    this.dialog.open(UserFieldPermissionComponent, { width: '80%', data: o });
+    this.dialog.open(UserDataPermissionComponent, { width: '80%', data: o });
   }
 
   showSysroles(o: any) {
-
+    this.dialog.open(SysroleDataPermissionComponent, { width: '80%', data: o });
   }
 
   showField(o: any) {

@@ -1,9 +1,10 @@
-<h2 mat-dialog-title>部署流程</h2>
-    <mat-dialog-content>
-       
+<h1>
+    数据权限设置：{{dialogData._links.self.href.split('/').splice(-1)}}
+</h1>
+<mat-dialog-content style="height: 300px;">
     <mat-form-field class="example-chip-list">
-        <mat-label>授权角色</mat-label>
-        <mat-chip-list #chipList aria-label="选择角色">
+        <mat-label></mat-label>
+        <mat-chip-list #chipList aria-label="选择用户">
           <mat-chip
             *ngFor="let fruit of fruits"
             [selectable]="selectable"
@@ -13,7 +14,7 @@
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
           <input
-            placeholder="输入角色名"
+            placeholder="输入用户名"
             #fruitInput
             [formControl]="fruitCtrl"
             [matAutocomplete]="auto"
@@ -22,14 +23,12 @@
             (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-            {{fruit}}
+          <mat-option *ngFor="let fruit of filteredFruits " [value]="fruit">
+            {{fruit._links.self.href.split('/').splice(-1)[0]}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-button [mat-dialog-close]>关闭</button>
-        <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-        <!-- <button mat-button (click)="saveKogitoFlow(data);" [mat-dialog-close] cdkFocusInitial>部署</button> -->
-    </mat-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-dialog-close cdkFocusInitial mat-flat-button color="primary">关闭</button>
+</mat-dialog-actions>

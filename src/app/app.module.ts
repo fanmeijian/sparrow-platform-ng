@@ -65,8 +65,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autoComplete';
 import { UserFlowComponent } from './bpm/user-flow/user-flow.component';
-import { SysroleFlowComponent } from './bpm/sysrole-flow/sysrole-flow.component'
-
+import { SysroleFlowComponent } from './bpm/sysrole-flow/sysrole-flow.component';
+import { FlowFormComponent } from './bpm/flow-form/flow-form.component';
+import { TrialFollowFormComponent } from './bpm/forms/sparrow-trial/sparrowTrial/trial-follow-form/trial-follow-form.component'
+import { ProcessFormComponent } from './bpm/forms/sparrow-trial/sparrowTrial/process-form/process-form.component';
+import { UserDataPermissionComponent } from './sysadmin/user-data-permission/user-data-permission.component';
+import { SysroleDataPermissionComponent } from './sysadmin/sysrole-data-permission/sysrole-data-permission.component'
 
 @NgModule({
   declarations: [
@@ -101,7 +105,12 @@ import { SysroleFlowComponent } from './bpm/sysrole-flow/sysrole-flow.component'
     DictComponent,
     KogitoFlowComponent,
     UserFlowComponent,
-    SysroleFlowComponent
+    SysroleFlowComponent,
+    FlowFormComponent,
+    TrialFollowFormComponent,
+    ProcessFormComponent,
+    UserDataPermissionComponent,
+    SysroleDataPermissionComponent
   ],
   imports: [
     BrowserModule,

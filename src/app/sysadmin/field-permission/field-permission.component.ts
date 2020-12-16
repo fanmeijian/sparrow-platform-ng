@@ -3,6 +3,8 @@ import { FieldPermissionService } from '../../service/field-permission.service'
 import { MatDialog } from '@angular/material/dialog';
 import { UserFieldPermissionComponent } from '../user-field-permission/user-field-permission.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { PageEvent } from '@angular/material/paginator';
+import { SysroleFieldPermissionComponent } from '../sysrole-field-permission/sysrole-field-permission.component';
 
 @Component({
   selector: 'app-field-permission',
@@ -10,11 +12,15 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./field-permission.component.css']
 })
 export class FieldPermissionComponent implements OnInit {
-  columnsToDisplay = ['id', 'modelName', 'fieldName', 'model', 'field', 'operation'];
+  columnsToDisplay = ['id', 'modelName', 'fieldName', 'model', 'field', 'permission' ,'operation'];
   constructor(private service: FieldPermissionService, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource();
   }
   field: any;
+
+
+  totalElements: number;
+  pageSize = 10;
 
   dataSource: MatTableDataSource<any>;
 
@@ -27,7 +33,7 @@ export class FieldPermissionComponent implements OnInit {
   }
 
   showSysroles(o: any) {
-
+    this.dialog.open(SysroleFieldPermissionComponent, { width: '80%', data: o });
   }
 
   showField(o: any) {
@@ -65,6 +71,15 @@ export class FieldPermissionComponent implements OnInit {
     } else {
       delete o.action;
     }
+  }
 
+  pageChange(pageEvent: PageEvent) {
+    if (pageEvent) {
+      this.service.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe(res => { 
+        this.dataSource.data = res._embedded[Object.keys(res._embedded)[0]]; 
+      });
+
+    }
+    return this.dataSource;
   }
 }

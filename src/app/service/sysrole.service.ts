@@ -30,7 +30,7 @@ export class SysroleService {
   }
 
   post(o:any){
-    return this.http.post(this.baseUrl,o);
+    return this.http.post<any>(this.baseUrl,o);
   }
 
   delete(o:any){
@@ -55,6 +55,10 @@ export class SysroleService {
 
   saveSysroleAuthorities(o:any){
     return this.http.post(GlobalVariable.BASE_API_URL+"/sysroleAuthorities",o);
+  }
+
+  findByNameContaining(a:string){
+    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/swdSysroles/search/findByNameContaining",{params: {name : a}});
   }
 
 }

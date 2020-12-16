@@ -8,6 +8,7 @@ import { TemplateRef } from '@angular/core';
 import { KogitoFlowService } from '../../app/service/kogito-flow.service'
 import { PageEvent } from '@angular/material/paginator';
 import { Pageable } from '../model/pageable';
+import { ProcessFormComponent } from '../bpm/forms/sparrow-trial/sparrowTrial/process-form/process-form.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,7 +27,7 @@ export class DashboardComponent implements OnInit {
   constructor(private http: HttpClient, private dialog: MatDialog, private kogitoFlowService: KogitoFlowService) { }
   columnsToDisplay = ['id', 'name', 'code', 'started', 'stat','user','group', 'operation'];
 
-  kogitoFlows:any[];
+  myKogitoFlow:any[];
 
   ngOnInit(): void {
     // let gql = `{
@@ -57,11 +58,7 @@ export class DashboardComponent implements OnInit {
       this.totalElements = res.totalElements;
     });
 
-    let pageable1: Pageable = new Pageable();
-    pageable1.isPaged = false;
-    this.kogitoFlowService.get(pageable1).subscribe(res=>{
-      this.kogitoFlows = res._embedded.kogitoFlows;
-    });
+    
   }
 
   approval(endPoint: string, cooperativeIntention: boolean) {
@@ -72,12 +69,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  applyTrial(trial: any){
-    this.kogitoFlowService.startProcess(trial.flow.processId,{'trialApply':trial.data}).subscribe(res=>{
-      this.ngOnInit();
-      this.dialog.closeAll();
-    });
-  }
+  
 
   //翻页事件
   pageChange(pageEvent: PageEvent) {
@@ -96,15 +88,19 @@ export class DashboardComponent implements OnInit {
     return this.dataSource;
   }
 
-  @ViewChild('sparrowTrial') sparrowTrialTmp: TemplateRef<any>;
+  // @ViewChild('sparrowTrial') sparrowTrialTmp: TemplateRef<any>;
   startProcess(kogitoFlow: any) {
-    this.dialog.open(this.sparrowTrialTmp,{data: {data: new Object(), flow: kogitoFlow}});
+    this.dialog.open(ProcessFormComponent,{data: {data: new Object(), flow: kogitoFlow}});
   }
 
 
   @ViewChild('kogitoFlowsT') kogitoFlowsT: TemplateRef<any>;
   listFlow() {
-    this.dialog.open(this.kogitoFlowsT,{data: new Object()});
+    this.kogitoFlowService.myKogitoFlow().subscribe(res=>{
+      // this.myKogitoFlow = res;
+      this.dialog.open(this.kogitoFlowsT,{data: {myKogitoFlow: res}, width: '80%'});
+    });
+    
   }
 
   // startProcess(data: any) {

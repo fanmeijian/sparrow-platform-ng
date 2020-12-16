@@ -14,17 +14,32 @@ export class FieldPermissionService {
   }
 
   listUsers(o:any){
-    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/userFieldPermission/"+o.id.model+"/"+o.id.field);
+    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/swdUserFieldPermissions", 
+    {params: {model: o._links.self.href.split('/').splice(-1)[0].split(',')[0],
+    field: o._links.self.href.split('/').splice(-1)[0].split(',')[1]}});
   }
 
   saveUserFieldPermission(o:any){
-    return this.http.post(GlobalVariable.BASE_API_URL+"/userFieldPermission",o);
+    return this.http.post<any>(GlobalVariable.BASE_API_URL+"/swdUserFieldPermissions",o,{observe: 'response'});
   }
 
   removeUserFieldPermission(id:any){
+    return this.http.request('delete',GlobalVariable.BASE_API_URL+"/swdUserFieldPermissions/"+ {body: id});
+  }
 
 
-    return this.http.request('delete',GlobalVariable.BASE_API_URL+"/userFieldPermission",{body: id});
+  listSysroles(o:any){
+    return this.http.get<any>(GlobalVariable.BASE_API_URL+"/swdSysroleFieldPermissions", 
+    {params: {model: o._links.self.href.split('/').splice(-1)[0].split(',')[0],
+    field: o._links.self.href.split('/').splice(-1)[0].split(',')[1]}});
+  }
+
+  saveSysroleFieldPermission(o:any){
+    return this.http.post<any>(GlobalVariable.BASE_API_URL+"/swdSysroleFieldPermissions",o,{observe: 'response'});
+  }
+
+  removeSysroleFieldPermission(id:any){
+    return this.http.request('delete',GlobalVariable.BASE_API_URL+"/swdSysroleFieldPermissions/"+ {body: id});
   }
 
   put(o:any){

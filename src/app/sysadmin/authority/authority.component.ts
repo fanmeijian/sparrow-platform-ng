@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class AuthorityComponent implements OnInit {
 
   authorities: any[];
-  columnsToDisplay = ["id", "name", "url", 'method', 'permission', "operation"];
+  columnsToDisplay = ["id", "name", "url", 'method', 'permission', 'client_id', "operation"];
   dataSource: MatTableDataSource<any>;
 
   length: any;
