@@ -28,7 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MenuComponent } from './sysadmin/menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import { AuthorityComponent } from './sysadmin/authority/authority.component';
-import { NgBpmnEditorModule } from 'ng-bpmn';
+// import { NgBpmnEditorModule } from 'ng-bpmn';
 import { MatSelectModule } from '@angular/material/select';
 import { SysroleComponent } from './sysadmin/sysrole/sysrole.component';
 import { UserComponent } from './sysadmin/user/user.component';
@@ -60,10 +60,10 @@ import { AppManagementComponent } from './sysadmin/app-management/app-management
 import { DictComponent } from './sysadmin/dict/dict.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { KogitoFlowComponent } from './bpm/kogito-flow/kogito-flow.component';
-import { DynamicFormsMaterialUIModule } from "@ng-dynamic-forms/ui-material";
+// import { DynamicFormsMaterialUIModule } from "@ng-dynamic-forms/ui-material";
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatAutocompleteModule } from '@angular/material/autoComplete';
+// import { MatAutocompleteModule } from '@angular/material/autoComplete';
 import { UserFlowComponent } from './bpm/user-flow/user-flow.component';
 import { SysroleFlowComponent } from './bpm/sysrole-flow/sysrole-flow.component';
 import { FlowFormComponent } from './bpm/flow-form/flow-form.component';
@@ -132,16 +132,16 @@ import { SysroleDataPermissionComponent } from './sysadmin/sysrole-data-permissi
     MatMenuModule,
     CdkTableModule,
     FormsModule,
-    NgBpmnEditorModule,
+    // NgBpmnEditorModule,
     MatSelectModule,
     HttpClientModule,
     MatButtonToggleModule,
     MatPaginatorModule,
     MatRadioModule,
-    DynamicFormsMaterialUIModule,
+    // DynamicFormsMaterialUIModule,
     ReactiveFormsModule,
     MatChipsModule,
-    MatAutocompleteModule
+    // MatAutocompleteModule
 
 
   ],

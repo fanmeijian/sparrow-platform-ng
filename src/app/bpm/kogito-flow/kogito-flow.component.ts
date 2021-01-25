@@ -4,14 +4,14 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  DynamicFormModel,
-  DynamicCheckboxModel,
-  DynamicInputModel,
-  DynamicRadioGroupModel
-} from "@ng-dynamic-forms/core";
+// import {
+//   DynamicFormModel,
+//   DynamicCheckboxModel,
+//   DynamicInputModel,
+//   DynamicRadioGroupModel
+// } from "@ng-dynamic-forms/core";
 
-import { DynamicFormService } from "@ng-dynamic-forms/core";
+// import { DynamicFormService } from "@ng-dynamic-forms/core";
 import { Pageable } from '../../model/pageable';
 import { UserTaskInstance } from '../../model/user-task-instance';
 import { KogitoFlowService } from '../../service/kogito-flow.service';
@@ -34,7 +34,7 @@ export class KogitoFlowComponent implements OnInit {
   cooperativeIntention: boolean;
 
   dataSource = new MatTableDataSource<KogitoFlow>();
-  constructor(private formService: DynamicFormService, private http: HttpClient, private dialog: MatDialog, private kogitoFlowService: KogitoFlowService) { }
+  constructor( private http: HttpClient, private dialog: MatDialog, private kogitoFlowService: KogitoFlowService) { }
   columnsToDisplay = ['id', 'name', 'processId', 'serviceName','version', 'state', 'operation'];
 
 
@@ -49,9 +49,9 @@ export class KogitoFlowComponent implements OnInit {
     });
   }
 
-  @ViewChild('tlNewFlow') tlDeployFlow: TemplateRef<any>;
+  // @ViewChild('tlNewFlow') tlDeployFlow: TemplateRef<any>;
   deployFlow(){
-    this.dialog.open(this.tlDeployFlow,{data: new KogitoFlow(), width:'80%'});
+    // this.dialog.open(this.tlDeployFlow,{data: new KogitoFlow(), width:'80%'});
   }
 
   saveKogitoFlow(flow: KogitoFlow){

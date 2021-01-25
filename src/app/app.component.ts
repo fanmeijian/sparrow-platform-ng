@@ -47,7 +47,7 @@ export class AppComponent {
   ngOnInit() {
 
     if (localStorage.getItem("idToken")) {
-      this.username = localStorage.getItem("username");
+      this.username = localStorage.getItem("username")!.toString();
       this.userService.userMenuTrees().subscribe(res => this.dataSource.data = res.data);
       if (localStorage.getItem("idToken")) {
         this.isLogin = true;

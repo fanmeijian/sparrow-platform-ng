@@ -273,7 +273,7 @@ export class MenuComponent implements OnInit {
   addNewItem(node: MenuFlatNode) {
     if(!node){
       //根菜单
-      this._database.insertItem(null, '');
+      this._database.insertItem(new MenuNode(), '');
     }else{
       const parentNode = this.flatNodeMap.get(node);
       node.expandable = true;
@@ -289,13 +289,13 @@ export class MenuComponent implements OnInit {
   /** Save the node to database */
   saveNode(node: MenuFlatNode) {
     const nestedNode = this.flatNodeMap.get(node);
-    this._database.updateItem(nestedNode);
+    this._database.updateItem(nestedNode!);
     
   }
 
   cancelNode(node: MenuFlatNode) {
-    const parentNode = this.flatNodeMap.get(this.getParentNode(node));//this.nodeMap.get(this.flatNodeMap.get(node).parentId);
-    this._database.cancelItem(parentNode!,this.flatNodeMap.get(node));
+    const parentNode = this.flatNodeMap.get(this.getParentNode(node)!);//this.nodeMap.get(this.flatNodeMap.get(node).parentId);
+    this._database.cancelItem(parentNode!,this.flatNodeMap.get(node)!);
   }
 
   ngOnInit(): void {
